@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Populate a Gravity Forms select field</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui">
+
+        <!-- build:css({app,.tmp}) /css/main.css -->
+        <!-- Syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+        <!-- endbuild -->
+
+        <link href="http://feeds.feedburner.com/m1es" rel="alternate" title="Blog RSS" type="application/atom+xml">
+        <link href="/albums-public.xml" rel="alternate" title="Public Albums RSS" type="application/atom+xml">
+        <link href="/albums-private.xml" rel="alternate" title="Private Albums RSS" type="application/atom+xml">
+
+    </head>
+    <body>
+
+      <header>
+        <h1><a href="/">m1es.net</a></h1>
+      </header>
+
+      <section>
+        <article>
+  <aside>
+    <p class="meta">24 February 2015</p>
+  </aside>
+  <header>
+    <h2>Populate a Gravity Forms select field</h2>
+    <h3>Adding options to a drop down dynamically</h3>
+  </header>
+  <hr />
+  <p>In a recent project I had to add options to a <code>select</code> field. In this case
+not all options could be set using the Gravity Forms Form Builder.</p>
+
+<p>Instead they had to be added dynamically, populating the drop down with extra values.</p>
+
+<p>The drop down, called <em>payment_type</em> has the following two options by default:</p>
+
+<ul>
+  <li>Creditcard</li>
+  <li>Paypal</li>
+</ul>
+
+<p>When using the checkout form as administrator the following options are added:</p>
+
+<ul>
+  <li>Manual payment</li>
+  <li>Test payment</li>
+</ul>
+
+<p>Here’s the code snippet.</p>
+
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nx">add_filter</span><span class="p">(</span> <span class="s1">&#39;gform_pre_render_1&#39;</span><span class="p">,</span> <span class="s1">&#39;add_payment_types&#39;</span> <span class="p">);</span>
+<span class="k">function</span> <span class="nf">add_payment_types</span><span class="p">(</span> <span class="nv">$form</span> <span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span> <span class="nx">is_super_admin</span><span class="p">()</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span> <span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="nb">count</span><span class="p">(</span> <span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;fields&#39;</span><span class="p">]</span> <span class="p">);</span> <span class="nv">$i</span><span class="o">++</span> <span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span> <span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;fields&#39;</span><span class="p">][</span><span class="nv">$i</span><span class="p">][</span><span class="s1">&#39;inputName&#39;</span><span class="p">]</span> <span class="o">===</span> <span class="s1">&#39;payment_type&#39;</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;fields&#39;</span><span class="p">][</span><span class="nv">$i</span><span class="p">][</span><span class="s1">&#39;choices&#39;</span><span class="p">][]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;text&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Manual payment&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;manual_payment&#39;</span><span class="p">];</span>
+        <span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;fields&#39;</span><span class="p">][</span><span class="nv">$i</span><span class="p">][</span><span class="s1">&#39;choices&#39;</span><span class="p">][]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;text&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Test payment&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;test_payment&#39;</span><span class="p">];</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nv">$form</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="cp">?&gt;</span><span class="x"></span></code></pre></div>
+
+<p>Note that the function is executed for a Gravity Form with ID = 1.
+Read more on <code>gform_pre_render</code> in the <a href="http://www.gravityhelp.com/documentation/gravity-forms/extending-gravity-forms/hooks/filters/gform_pre_render/">documentation</a>.</p>
+
+<p>Kudos for the inspiration go to <a href="https://pantheon.io/blog/dynamically-populated-radio-buttons-wordpress-and-gravity-forms">pantheon.io</a>.</p>
+
+</article>
+
+      </section>
+
+      <footer>
+        <div class="col">
+          <a href="http://michelfiege.nl">Michel Fiege</a><br />
+          <script type="text/javascript">
+            //<![CDATA[
+            <!--
+            var x="function f(x){var i,o=\"\",l=x.length;for(i=0;i<l;i+=2) {if(i+1<l)o+=" +
+            "x.charAt(i+1);try{o+=x.charAt(i);}catch(e){}}return o;}f(\"ufcnitnof x({)av" +
+            " r,i=o\\\"\\\"o,=l.xelgnhtl,o=;lhwli(e.xhcraoCedtAl(1/)3=!84{)rt{y+xx=l;=+;" +
+            "lc}tahce({)}}of(r=i-l;1>i0=i;--{)+ox=c.ahAr(t)i};erutnro s.buts(r,0lo;)f}\\" +
+            "\"(9),3\\\"\\\\23\\\\07\\\\02\\\\\\\\35\\\\04\\\\01\\\\\\\\06\\\\05\\\\03\\" +
+            "\\\\\\6C01\\\\\\\\34\\\\0s\\\\3p7u17\\\\\\\\xv~nyV{qxq1}Q,W.l7sdqo!$m^Pn24\\"+
+            "\\00\\\\03\\\\\\\\27\\\\03\\\\03\\\\\\\\17\\\\01\\\\02\\\\\\\\2703\\\\\\\\2" +
+            "0\\\\0%\\\\\\\\/\\\\\\\"'\\\\'s*3%,`.35\\\\0}\\\\[YTO33\\\\0[\\\\05\\\\02\\" +
+            "\\03\\\\\\\\37\\\\0X\\\\QY[GGC01\\\\0Z\\\\IC_FGJ\\\\C(\\\"}fo;n uret}r);+)y" +
+            "+^(i)t(eAodrCha.c(xdeCoarChomfrg.intr=So+7;12%=;y=iy+9)=3i=f({i+)i+l;i<0;i=" +
+            "r(foh;gten.l=x,l\\\"\\\\\\\"\\\\o=i,r va){,y(x fontincfu)\\\"\")"            ;
+            while(x=eval(x));
+            //-->
+            //]]>
+          </script>
+        </div>
+        <div class="col">
+          <nav>
+            <a href="/web-developer">/web developer</a><br />
+            <a href="/photographer">/photographer</a>
+          </nav>
+        </div>
+        <div class="col">
+          <a href="https://github.com/m1es">github.com/m1es</a><br />
+          <a href="https://twitter.com/m1es">twitter.com/m1es</a>
+        </div>
+      </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-60343915-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+    <!-- build:js({app,.tmp}) /js/scripts.js -->
+    <script src="/js/main.js"></script>
+    <!-- endbuild -->
+    </body>
+</html>

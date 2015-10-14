@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>m1es.net - blog</title>
+    <description>by Michel Fiege</description>
+    <link>http://m1es.net</link>
+    <atom:link href="http://m1es.net/feed.xml" rel="self" type="application/rss+xml" />
+    
+      <item>
+        <title>Back button focus x100t</title>
+        <description>&lt;p&gt;I’m really glad I came along &lt;a href=&quot;http://photo.rwboyer.com/2013/10/15/fuji-x100s-expert-mode/&quot;&gt;this post&lt;/a&gt; describing a &lt;em&gt;back button focus&lt;/em&gt; way for the Fuji x100t. In short:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Switch to manual focus&lt;/li&gt;
+  &lt;li&gt;Now you can use the AE/AF lock button to change focus&lt;/li&gt;
+  &lt;li&gt;Take your shot&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I’ve been giving it a try and so far so good. Not sure yet if it prevents &lt;a href=&quot;http://www.rangefinderforum.com/forums/showthread.php?t=111811&quot;&gt;miss-focus&lt;/a&gt; though.&lt;/p&gt;
+
+</description>
+        <pubDate>Sat, 13 Jun 2015 00:00:00 +0200</pubDate>
+        <link>http://m1es.net//2015/06/13/back-button-focus-x100t.html</link>
+        <guid isPermaLink="true">http://m1es.net//2015/06/13/back-button-focus-x100t.html</guid>
+      </item>
+    
+      <item>
+        <title>Populate a Gravity Forms select field</title>
+        <description>&lt;p&gt;In a recent project I had to add options to a &lt;code&gt;select&lt;/code&gt; field. In this case
+not all options could be set using the Gravity Forms Form Builder.&lt;/p&gt;
+
+&lt;p&gt;Instead they had to be added dynamically, populating the drop down with extra values.&lt;/p&gt;
+
+&lt;p&gt;The drop down, called &lt;em&gt;payment_type&lt;/em&gt; has the following two options by default:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Creditcard&lt;/li&gt;
+  &lt;li&gt;Paypal&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;When using the checkout form as administrator the following options are added:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Manual payment&lt;/li&gt;
+  &lt;li&gt;Test payment&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Here’s the code snippet.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;add_filter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;gform_pre_render_1&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;add_payment_types&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;add_payment_types&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$form&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;is_super_admin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$form&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;fields&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$form&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;fields&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;inputName&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;payment_type&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nv&quot;&gt;$form&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;fields&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;choices&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;text&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Manual payment&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;value&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;manual_payment&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+        &lt;span class=&quot;nv&quot;&gt;$form&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;fields&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;choices&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;text&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Test payment&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;value&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;test_payment&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$form&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Note that the function is executed for a Gravity Form with ID = 1.
+Read more on &lt;code&gt;gform_pre_render&lt;/code&gt; in the &lt;a href=&quot;http://www.gravityhelp.com/documentation/gravity-forms/extending-gravity-forms/hooks/filters/gform_pre_render/&quot;&gt;documentation&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Kudos for the inspiration go to &lt;a href=&quot;https://pantheon.io/blog/dynamically-populated-radio-buttons-wordpress-and-gravity-forms&quot;&gt;pantheon.io&lt;/a&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 24 Feb 2015 00:00:00 +0100</pubDate>
+        <link>http://m1es.net//2015/02/24/populate-a-gravity-forms-select-field.html</link>
+        <guid isPermaLink="true">http://m1es.net//2015/02/24/populate-a-gravity-forms-select-field.html</guid>
+      </item>
+    
+      <item>
+        <title>Let&#39;s try this</title>
+        <description>&lt;p&gt;Why not? Let’s just try this for a while. For a long time I have been wanting to
+write things down. Things about web development in particular.
+Probably some things about photography as well. Well, off we go.
+There’s no more turning back now.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 16 Feb 2015 00:00:00 +0100</pubDate>
+        <link>http://m1es.net//2015/02/16/lets-try-this.html</link>
+        <guid isPermaLink="true">http://m1es.net//2015/02/16/lets-try-this.html</guid>
+      </item>
+    
+  </channel>
+</rss>
