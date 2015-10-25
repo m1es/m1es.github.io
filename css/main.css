@@ -324,3 +324,38 @@ pre.terminal code {
     color: #008080; }
   .highlight .il {
     color: #099; }
+
+/*****************************************************************************/
+/*
+/* Animate
+/*
+/*****************************************************************************/
+body {
+  transition: .5s;
+  animation-name: animate-in;
+  animation-duration: .5s; }
+
+.animate-out {
+  opacity: 0; }
+
+@-moz-keyframes animate-in {
+  from {
+    opacity: 0;
+    transform: scale(0); }
+  to {
+    opacity: 1;
+    transform: scale(1); } }
+@-webkit-keyframes animate-in {
+  from {
+    opacity: 0;
+    transform: scale(0); }
+  to {
+    opacity: 1;
+    transform: scale(1); } }
+@keyframes animate-in {
+  from {
+    opacity: 0;
+    transform: scale(0); }
+  to {
+    opacity: 1;
+    transform: scale(1); } }

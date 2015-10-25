@@ -7,6 +7,17 @@
     <atom:link href="http://m1es.net/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>CSS quantity queries</title>
+        <description>&lt;p&gt;In a project I was working on recently we needed a row with a variable number of columns. While this seems a perfect case for using a flex-grid, we couldn’t do this because of browser compatibility requirements. Based on the post &lt;a href=&quot;http://lea.verou.me/2011/01/styling-children-based-on-their-number-with-css3/&quot;&gt;‘Styling elements based on sibling count’&lt;/a&gt; I cooked up a solution you find in &lt;a href=&quot;http://codepen.io/m1es/pen/NGYKWN&quot;&gt;this CodePen&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;This week I stumbled upon a post in which the possibilies of the so-called ‘quantity queries’ are &lt;a href=&quot;http://www.tomango.co.uk/thinks/using-quantity-queries-to-write-content-aware-css/&quot;&gt;perfectly explained&lt;/a&gt;. Must read.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 24 Oct 2015 00:00:00 +0200</pubDate>
+        <link>http://m1es.net/2015/10/24/quantity-queries.html</link>
+        <guid isPermaLink="true">http://m1es.net//2015/10/24/quantity-queries.html</guid>
+      </item>
+    
+      <item>
         <title>Back button focus x100t</title>
         <description>&lt;p&gt;I’m really glad I came along &lt;a href=&quot;http://photo.rwboyer.com/2013/10/15/fuji-x100s-expert-mode/&quot;&gt;this post&lt;/a&gt; describing a &lt;em&gt;back button focus&lt;/em&gt; way for the Fuji x100t. In short:&lt;/p&gt;
 
